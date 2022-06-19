@@ -1,31 +1,54 @@
 const mongoose = require('mongoose')
+const validator = require('validator')
 
 const userSchema=new mongoose.Schema({
 
-    firstName:{
+    name:{
         type: String,
-    },
-
-    lastName:{
-        type: String,
+        required: [true, "Please provide a name"],
+        maxlength: [40, "Name should be under 40 characters"]
     },
 
     email:{
         type: String,
-        required: [true, "Please enter email"],
+        required: [true, "Please provide an email"],
+        validate: [validator.isEmail, "Please enter email in correct format"],
         unique: true
     },
 
     password:{
         type: String,
-        required: [true, "Please enter password"]
+        required: [true, "Please provide a password"],
+        minlength: [6, "password should be atleast 6 char"],
+        select:false,
     },
 
-    token:{
+    role:{
         type: String,
+        default:"user"
+    },
+
+    photo:{
+        id:{
+            type:String,
+            required:true
+        },
+        secure_url: {
+            type: String,
+            required: true
+        }
+    },
+
+    forgotPasswordToken: String,
+
+    forgotPasswordExpiry: Date,
+
+    createdAt:{
+        type:Date,
+        default: Date.now
     }
 })
-
+ 
 const User=mongoose.model('User', userSchema)
 
 module.exports=User
