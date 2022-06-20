@@ -3,6 +3,7 @@ const dotenv=require('dotenv').config()
 const morgan = require('morgan')
 const connectDB= require('./backend/configs/db')
 const cookieParser=require("cookie-parser")
+const cloudinary=require("cloudinary")
 const fileUpload=require('express-fileupload')
 
 const port= process.env.PORT||5000
@@ -24,10 +25,20 @@ app.use(express.urlencoded({ extended:true }))
 
 //cookies and files middlewares
 app.use(cookieParser())
-app.use(fileUpload())
+app.use(fileUpload({
+    useTempFiles:true,
+    tempFileDir:"/tmp/"
+}))
 
 //morgan middleware
 app.use(morgan("tiny"))
+
+//cloudinary config
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+})
 
 //routes imports
 app.get("/", (req, res) => {
