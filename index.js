@@ -13,6 +13,7 @@ connectDB()
 //Swagger Documentation
 const swaggerUi=require("swagger-ui-express")
 const YAML=require("yamljs")
+const { errorHandler } = require('./backend/middlewares/errorHandler')
 const swaggerDocument = YAML.load('./swagger.yaml');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
@@ -32,6 +33,12 @@ app.use(morgan("tiny"))
 app.get("/", (req, res) => {
     res.send("<h1>Welcome</h1>")
 })
+
+app.use(errorHandler)
+
+app.use("/api/v1", require("./backend/routes/user"))
+
+
 
 app.listen(port, ()=>{
     console.log(`listening on port ${port}`)
