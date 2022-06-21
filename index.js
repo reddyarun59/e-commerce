@@ -45,9 +45,9 @@ app.get("/", (req, res) => {
     res.send("<h1>Welcome</h1>")
 })
 
-app.use(errorHandler)
 
 app.use("/api/v1", require("./backend/routes/user"))
+app.use(errorHandler)
 
 
 
