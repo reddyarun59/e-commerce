@@ -225,10 +225,74 @@ const passwordReset = asyncHandler(async(req, res)=>{
     }
 })
 
+const getLoggedInUserDetails= asyncHandler(async(req, res)=>{
+    
+    const user = await User.findById(req.user.id)
+
+    if(user){
+        res.status(200).json({
+            success: true,
+            user
+        })
+    }
+})
+
+const changePassword = asyncHandler(async(req, res)=>{
+
+    const user = await User.findById(req.user.id).select("+password")
+
+    const isCorrectOldPassword = await user.isValidatedPassword(req.body.oldPassword)
+
+    if(!isCorrectOldPassword){
+        res.status(400)
+        throw new Error("Old Password is incorrect")
+    }
+
+    user.password=req.body.password
+
+    await user.save()
+
+    const token=user.getJwtToken()
+
+    const options={
+        expires: new Date(Date.now() +30 *24 * 60 * 60 * 1000),
+        httpOnly: true
+    }
+
+        res.status(200).cookie("token", token, options).json({
+            success: true,
+            token,
+            user
+        })
+
+})
+
+// const updateUserDetails=asyncHandler(async(req, res)=>{
+
+//     const newData={
+//         name: req.body.name,
+//         email: req.body.email,
+
+//     }
+
+//     const user = await User.findByIdAndUpdate(req.user.id, newData, {
+//         new:true,
+//         runValidators: true,
+//     })
+
+//     res.status(200).json({
+//         success: true,
+//         user
+//     })
+// })
+
 module.exports={
     signup,
     login,
     logout,
     forgotPassword,
     passwordReset,
+    getLoggedInUserDetails,
+    changePassword,
+    
 }
