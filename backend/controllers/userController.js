@@ -65,8 +65,6 @@ const signup=asyncHandler(async(req, res)=>{
 
 
 
-
-
 module.exports={
     signup
 }
