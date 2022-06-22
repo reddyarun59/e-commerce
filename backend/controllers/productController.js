@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler")
 const Product = require("../models/product")
 const cloudinary= require("cloudinary")
+const WhereClause = require("../utils/whereClause")
 //const product = require("../models/product")
 
 
@@ -40,6 +41,32 @@ const addProduct = asyncHandler(async(req, res)=>{
     })
 })
 
+const getAllProduct= asyncHandler(async(req, res)=>{
+    
+  const resultPerPage = 6;
+  const totalcountProduct = await Product.countDocuments();
+
+  const productsObj = new WhereClause(Product.find(), req.query)
+    .search()
+    .filter();
+
+  let products = await productsObj.base;
+  const filteredProductNumber = products.length;
+
+  //products.limit().skip()
+
+  productsObj.pager(resultPerPage);
+  products = await productsObj.base.clone();
+
+  res.status(200).json({
+    success: true,
+    products,
+    filteredProductNumber,
+    totalcountProduct,
+  });
+})
+
 module.exports={
-    addProduct
+    addProduct,
+    getAllProduct
 }
