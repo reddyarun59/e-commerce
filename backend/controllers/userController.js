@@ -286,6 +286,27 @@ const changePassword = asyncHandler(async(req, res)=>{
 //     })
 // })
 
+
+const adminAllUsers=asyncHandler(async(req, res)=>{
+
+    const users = await User.find()
+
+    res.status(200).json({
+        success: true,
+        users,
+    })
+})
+
+const managerAllUsers=asyncHandler(async(req, res)=>{
+
+    const users = await User.find({role:"user"})
+
+    res.status(200).json({
+        success: true,
+        users,
+    })
+})
+
 module.exports={
     signup,
     login,
@@ -294,5 +315,6 @@ module.exports={
     passwordReset,
     getLoggedInUserDetails,
     changePassword,
-    
+    adminAllUsers,
+    managerAllUsers
 }

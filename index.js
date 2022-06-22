@@ -47,6 +47,7 @@ app.get("/", (req, res) => {
 
 
 app.use("/api/v1", require("./backend/routes/user"))
+app.use("/api/v1/", require("./backend/routes/product"))
 app.use(errorHandler)
 
 
