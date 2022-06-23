@@ -47,6 +47,11 @@ const productSchema=new mongoose.Schema({
         }
     },
 
+    stock:{
+        type:Number,
+        required:[true, "Please provide product stock"]
+    },
+
     brand:{
         type:String,
         required:[true, "Please provide a brand name for product"]
