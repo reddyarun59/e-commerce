@@ -10,7 +10,7 @@ const productSchema=new mongoose.Schema({
     },
 
     price:{
-        typr:Number,
+        type:Number,
         required:[true, "Please provide product price"],
         maxLength:[6, "Product price should not be more than 6 digits"]
     },

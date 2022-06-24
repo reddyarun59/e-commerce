@@ -1,7 +1,8 @@
 const asyncHandler = require("express-async-handler")
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const Razorpay=require('razorpay')
-const {nanoid}=require('nanoid')
+//const {nanoid} = require('nanoid')
+
 
 const sendStripeKey= asyncHandler(async(req, res)=>{
     res.status(200).json({
@@ -34,14 +35,16 @@ const sendRazorpayKey= asyncHandler(async(req, res)=>{
 const captureRazorpayPayment = asyncHandler(async(req, res)=>{
     var instance = new Razorpay({ key_id: process.env.RAZORPAY_API_KEY, key_secret: process.env.RAZORPAY_SECRET })
 
-    instance.orders.create({
+    const myOrder = await instance.orders.create({
         amount: req.body.amount,
         currency: "INR",
-        receipt: nanoid(),
-        notes: {
-            key1: "value3",
-            key2: "value2"
-        }
+        // receipt: nanoid(),    
+    })
+
+    res.status(200).json({
+        success: true,
+        amount:req.body.amount,
+        order:myOrder
     })
 })
 
