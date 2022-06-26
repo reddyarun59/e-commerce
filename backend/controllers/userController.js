@@ -57,7 +57,6 @@ const signup=asyncHandler(async(req, res)=>{
 
     if(user){
         res.status(200).cookie("token", token, options).json({
-            success: true,
             token,
             user
         })
