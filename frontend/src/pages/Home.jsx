@@ -9,22 +9,24 @@ const Home = () => {
     const dispatch =useDispatch()
     const { user}=useSelector((state)=>state.auth)
     const [products, setProducts]=useState("")
+    
     const fetchProducts = async() =>{
 
         try {
             
             const {data}= await axios.get("/api/v1/products")
-            setProducts(data)
+            setProducts(data.products)
+            // console.log(products)
 
         } catch (error) {
             
         }
     }
     useEffect(()=>{
+        
         fetchProducts()
-        //console.log(products)
+        console.log(products)
     },[])
-    console.log(products)
 
     const handleClick=()=>{
         dispatch(logout())
@@ -36,6 +38,7 @@ const Home = () => {
     <div>
         <h1 className="bg-red-600">hello</h1>
         <button onClick={handleClick}>Helloccc {user&&user.user.name}</button>
+        {products.map((product=><h1>{product.name}</h1>))}
     </div>
   )
 }

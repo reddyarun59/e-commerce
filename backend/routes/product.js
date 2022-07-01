@@ -15,9 +15,7 @@ router.route("/review").delete(protect, deleteReview);
 router.route("/reviews").get(protect, getOnlyReviewsForOneProduct);
 
 //admin routes
-router
-  .route("/admin/product/add")
-  .post(protect, customRole("admin"), addProduct);
+router.route("/admin/product/add").post(protect, customRole("admin"), addProduct);
 
 router
   .route("/admin/products")

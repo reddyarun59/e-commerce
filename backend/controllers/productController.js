@@ -8,32 +8,30 @@ const WhereClause = require("../utils/whereClause")
 const addProduct = asyncHandler(async(req, res)=>{
     
     let imageArray=[]
+    const user=await req.user.id
+    const { name, price, description, category, stock, brand, photos }=await req.body
+    //let photos=req.body.photos
+    
+    
+    // if(req.body.photos){
+        
+    //    for(let index = 0; index < req.body.photos.length; index++){
+            
+    //             imageArray.push({
+    //                 photos
+    //             })
+                    
+    //         }
+    //     }
+        
+    //     // if(!req.body.files.photos){
+    //     //     res.status(401)
+    //     //     throw new Error("Images are required")
+    //     // }
+    //  photos=imageArray
 
-    if(!req.files){
-        res.status(401)
-        throw new Error("Images are required")
-    }
-
-    if(req.files){
-
-        for(let index = 0; index < req.files.photos.length; index++){
-            let result = await cloudinary.v2.uploader.upload(
-                req.files.photos[index].tempFilePath,
-                {
-                    folder:"products"
-                }
-            )
-            imageArray.push({
-                id:result.public_id,
-                secure_url:result.secure_url
-            })
-        }
-    }
-
-    req.body.photos=imageArray
-    req.body.user=req.user.id
-
-    const product=await Product.create(req.body)
+    const product=await Product.create({name, price, description, photos, category, stock, brand, user})
+    //await product.save()
 
     res.status(200).json({
         success:true,
