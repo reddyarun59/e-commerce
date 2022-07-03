@@ -41,7 +41,7 @@ const addProduct = asyncHandler(async(req, res)=>{
 
 const getAllProduct= asyncHandler(async(req, res)=>{
     
-  const resultPerPage = 6;
+  const resultPerPage = 9;
   const totalcountProduct = await Product.countDocuments();
 
   const productsObj = new WhereClause(Product.find(), req.query)
@@ -57,7 +57,6 @@ const getAllProduct= asyncHandler(async(req, res)=>{
   products = await productsObj.base.clone();
 
   res.status(200).json({
-    success: true,
     products,
     filteredProductNumber,
     totalcountProduct,

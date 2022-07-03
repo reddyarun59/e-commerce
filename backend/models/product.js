@@ -27,16 +27,18 @@ const productSchema=new mongoose.Schema({
 
     category:{
         type:String,
-        required:[true, "Please select category from- shorts, pants, hoodies, sweatshirts"],
-        enum:{
-            values:[
-                "shorts",
-                "pants",
-                "hoodies",
-                "sweatshirts"
-            ],
-            message:"Please select category only from- shorts, pants, hoodies, sweatshirts"
-        }
+        required:[true
+            // , "Please select category from- shorts, pants, hoodies, sweatshirts"
+        ],
+        // enum:{
+        //     values:[
+        //         "shorts",
+        //         "pants",
+        //         "hoodies",
+        //         "sweatshirts"
+        //     ],
+        //     message:"Please select category only from- shorts, pants, hoodies, sweatshirts"
+        // }
     },
 
     stock:{

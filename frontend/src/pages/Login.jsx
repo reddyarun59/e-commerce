@@ -8,12 +8,11 @@ import { login, reset } from '../features/auth/authSlice'
 const Login = () => {
 
   const [formData, setFormData] =useState({
-    name:"",
     email:"",
     password:""
   })
 
-  const {name, email, password}=formData
+  const { email, password}=formData
 
   const handleChange=(e)=>{
     setFormData(prevState=>({
@@ -36,7 +35,7 @@ const Login = () => {
         navigate("/")
     }
     dispatch(reset())
-},[user, isError, isLoading, isSuccess, message, navigate, dispatch])
+},[user, isError, isLoading, isSuccess, message, dispatch,navigate])
 
 if(isLoading){
   return(
@@ -49,16 +48,10 @@ if(isLoading){
     <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div>
         <div>
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Register for Account</h2>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Signin to your account</h2>
         </div>
         <form className="mt-8 space-y-6"> 
             <div className="rounded-md shadow-sm -space-y-px">
-                <div className="flex">
-                    <label htmlFor="name" className="text-xl">
-                        Name
-                    </label>
-                    <input id="name" type="text" name="name" value={name} onChange={handleChange} />
-                </div>
                 <div>
                     <label htmlFor="email">
                         Email
