@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 import { logout, reset } from "../features/auth/authSlice"
 import { fetchProducts } from '../features/product/productSlice'
-import {addToCart} from '../features/cart/cartSlice'
+import {addToCart, getTotals} from '../features/cart/cartSlice'
 
 
 const Home = () => {
@@ -56,6 +56,8 @@ const Home = () => {
     const handleAddToCart=product=>{
       dispatch(addToCart(product))
     }
+
+    dispatch(getTotals())
 
 
   return (
