@@ -18,6 +18,15 @@ export const fetchProducts =createAsyncThunk("products/fetchProducts", async(_,t
     }
 })
 
+export const fetchOneProductDetails = createAsyncThunk("products/fetchOneProductDetails", async(id, thunkAPI) => {
+    try {
+        return await productService.fetchOneProductDetails(id)
+    } catch (error) {
+        const message=(error.response&&error.response.data&&error.response.data.message)||error.message||error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 const productSlice = createSlice({
     name:"products",
     initialState,
@@ -40,6 +49,21 @@ const productSlice = createSlice({
                 state.products=action.payload
             })
             .addCase(fetchProducts.rejected, (state,action)=>{
+                state.isLoading=false;
+                state.isError=true;
+                state.isSuccess=false;
+                state.message=action.payload;
+                state.products=null
+            })
+            .addCase(fetchOneProductDetails.pending, (state)=>{
+                state.isLoading=true;
+            })
+            .addCase(fetchOneProductDetails.fulfilled, (state,action)=>{
+                state.isLoading=false;
+                state.isSuccess=true;
+                state.products=action.payload
+            })
+            .addCase(fetchOneProductDetails.rejected, (state,action)=>{
                 state.isLoading=false;
                 state.isError=true;
                 state.isSuccess=false;

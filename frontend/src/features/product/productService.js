@@ -5,8 +5,14 @@ const fetchProducts=async()=>{
     return response.data
 }
 
+const fetchOneProductDetails=async(productId)=>{
+    const response=await axios.get(`/api/v1/product/${productId}`)
+    return response.data
+}
+
 const productService={
-    fetchProducts
+    fetchProducts,
+    fetchOneProductDetails
 }
 
 export default productService

@@ -8,8 +8,10 @@ import AddProducts from './pages/AddProducts';
 import Navbar from './components/Navbar';
 import { ToastContainer } from "react-toastify"
 import Cart from './pages/Cart';
+import ProductDetails from './pages/ProductDetails';
 
 function App() {
+  
   return (
     <div className="App">
       <Router>
@@ -17,6 +19,9 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path="/" element={<Home/>}/>
+          <Route path="/product">
+            <Route path=":id" element={<ProductDetails/>}/>
+          </Route>
           <Route path="/cart" element={<Cart/>}/>
           <Route path="/signup" element={<Register/>}/>
           <Route path="/signin" element={<Login/>}/>
