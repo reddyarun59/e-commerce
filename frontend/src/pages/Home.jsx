@@ -4,6 +4,8 @@ import axios from 'axios'
 import { logout, reset } from "../features/auth/authSlice"
 import { fetchProducts } from '../features/product/productSlice'
 import {addToCart, getTotals} from '../features/cart/cartSlice'
+import ReactStars from "react-rating-stars-component"
+
 
 
 const Home = () => {
@@ -11,6 +13,7 @@ const Home = () => {
     const dispatch =useDispatch()
     const [loading, setLoading]=useState(false)
     const { user}=useSelector((state)=>state.auth)
+    const cart=useSelector((state)=>state.cart)
     //const [products, setProducts]=useState("")
     //const {products}=useSelector((state)=>state.products)
     
@@ -77,6 +80,10 @@ const Home = () => {
                   <div className="card-body">
                     <h2 className="card-title">{product.name}</h2>
                     <p>{product.description}</p>
+                    <div>
+                      <ReactStars edit={false} activeColor="#ffd700" isHalf={true} value={product.ratings} color="rgba(20,20,20,0.1)"/>
+                      <span>({product.numberOfReviews} reviews)</span>
+                    </div>
                     <div className="card-actions justify-around">
                       <div>{product.price}</div>
                       <button className="btn btn-primary" onClick={()=>handleAddToCart(product)}>Add to Cart</button>

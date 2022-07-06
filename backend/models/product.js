@@ -20,10 +20,18 @@ const productSchema=new mongoose.Schema({
         required:[true, "Please provide product description"]
     },
 
-    photos:{
-            type:String,
-            required:true
-        },
+    photos:[
+        {
+            id:{
+                type:String,
+                required:true
+            },
+            secure_url:{
+                type:String,
+                required:true
+            }
+        }
+    ],
 
     category:{
         type:String,
