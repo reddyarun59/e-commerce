@@ -55,7 +55,7 @@ const addProduct = asyncHandler(async(req, res)=>{
 
 const getAllProduct= asyncHandler(async(req, res)=>{
     
-  const resultPerPage = 9;
+  const resultPerPage = 15;
   const totalcountProduct = await Product.countDocuments();
 
   const productsObj = new WhereClause(Product.find(), req.query)

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Carousel from 'react-material-ui-carousel'
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchOneProductDetails } from '../features/product/productSlice';
+import { fetchOneProductDetails, reset } from '../features/product/productSlice';
 
 const ProductDetails = ({match}) => {
 
@@ -13,16 +13,19 @@ const ProductDetails = ({match}) => {
 
     useEffect(()=>{
         dispatch(fetchOneProductDetails(id))
+        return ()=>{
+            dispatch(reset())
+          }
     }, [dispatch, id])
 
 
   return (
     <div>
-        <div>
+        <div className="w-full flex p-1">
             <div>
                 <Carousel>
-                    {products.photos&&
-                        products.photos.map((item,i)=>(
+                    {products.product?.photos&&
+                        products.product?.photos.map((item,i)=>(
                             <img key={item._id} src={item.secure_url} alt={`${i} Slide`} />
                         ))}
                 </Carousel>
